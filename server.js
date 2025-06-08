@@ -7,13 +7,14 @@ const multer = require('multer');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const nodemailer = require('nodemailer');
+const fs = require('fs');
 const path = require('path');
 
 // ===== إعدادات ثابتة =====
 const SITE_NAME = "rayen";
 const ADMIN_EMAIL = "ahmedusama77@icloud.com";
 const NOTIFY_EMAIL = "ahmedusama77@icloud.com"; // بريد الإرسال (يفضل يكون Gmail)
-const NOTIFY_EMAIL_PASSWORD = "ضع_كلمة_سر_التطبيق_الخاصة_بجيميل_هنا"; // ضع كلمة سر تطبيق من إعدادات Gmail
+const NOTIFY_EMAIL_PASSWORD = "app-password-here"; // ضع كلمة سر تطبيق Gmail هنا
 const JWT_SECRET = 'supersecret';
 const SERVER_URL = "http://localhost:5000";
 
@@ -32,6 +33,7 @@ app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // ===== اتصال قاعدة البيانات =====
 mongoose.connect('mongodb://localhost:27017/rayen', { useNewUrlParser: true, useUnifiedTopology: true });
@@ -276,6 +278,12 @@ app.get('/api/orders/all', authMiddleware, async (req, res) => {
     .populate('buyer', 'fullName address phone')
     .sort({ createdAt: -1 });
   res.json(orders);
+});
+
+// ===== حل مشكلة 404 مع SPA =====
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) return res.status(404).send("Not found");
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 // ===== تشغيل السيرفر =====
