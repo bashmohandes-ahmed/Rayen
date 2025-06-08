@@ -1,72 +1,172 @@
 body {
-  font-family: 'Cairo', Arial, sans-serif;
-  background: #f7f9fa;
-  color: #222;
+  font-family: 'Cairo', 'Roboto Mono', Arial, sans-serif;
+  background: linear-gradient(135deg, #0f2027 0%, #2c5364 100%);
+  color: #fff;
   direction: rtl;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 }
 
 header {
-  background: #0077cc;
-  color: #fff;
-  padding: 18px 0 10px 0;
-  text-align: center;
-  box-shadow: 0 2px 8px #0002;
+  background: rgba(18, 30, 49, 0.97);
+  box-shadow: 0 2px 12px #0003;
+  position: sticky;
+  top: 0;
+  z-index: 20;
 }
 
-header h1 {
-  margin: 0 0 10px 0;
-  font-weight: 700;
-  letter-spacing: 1px;
+.container.nav-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2vw;
+}
+
+.logo-tech {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: bold;
+  font-size: 2em;
+  letter-spacing: 2px;
+  color: #2ef8a0;
+  text-shadow: 0 0 8px #2ef8a055;
+}
+
+.logo-icon {
+  font-size: 1.25em;
+  background: #2ef8a0;
+  color: #192a56;
+  border-radius: 50%;
+  padding: 4px 7px;
+  box-shadow: 0 0 12px #2ef8a044;
 }
 
 nav {
   display: flex;
-  justify-content: center;
-  gap: 18px;
-  margin-bottom: 10px;
+  gap: 22px;
 }
 
 nav a {
   color: #fff;
   text-decoration: none;
-  font-weight: bold;
-  transition: color 0.2s;
-  font-size: 1.1em;
+  font-weight: 600;
+  font-size: 1.07em;
+  letter-spacing: 1px;
+  padding: 8px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-bottom 0.2s;
 }
-nav a:hover {
-  color: #ffe79f;
+nav a:hover, nav a.active {
+  color: #2ef8a0;
+  border-bottom: 2px solid #2ef8a0;
 }
 
 main {
   max-width: 900px;
-  margin: 30px auto;
-  padding: 18px;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px #0001;
-  min-height: 65vh;
+  margin: 40px auto 0 auto;
+  padding: 0 15px 30px 15px;
+  min-height: 70vh;
+}
+
+.hero {
+  margin: 50px 0 40px 0;
+  text-align: center;
+}
+.hero h1 {
+  font-size: 2.7em;
+  font-family: 'Roboto Mono', 'Cairo', monospace;
+  font-weight: 700;
+  letter-spacing: 3px;
+  margin-bottom: 18px;
+}
+.color-tech {
+  color: #2ef8a0;
+  text-shadow: 0 0 25px #2ef8a077;
+}
+.subtitle {
+  font-size: 1.3em;
+  color: #cce7f2;
+  margin-bottom: 32px;
+}
+.btn-main {
+  display: inline-block;
+  background: linear-gradient(90deg, #2ef8a0 0%, #0ed2f7 100%);
+  color: #192a56;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2em;
+  padding: 12px 38px;
+  text-decoration: none;
+  box-shadow: 0 4px 16px #2ef8a033;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+.btn-main:hover {
+  background: linear-gradient(90deg, #0ed2f7 0%, #2ef8a0 100%);
+  color: #102030;
+  box-shadow: 0 4px 24px #0ed2f799;
+}
+
+.features {
+  display: flex;
+  gap: 26px;
+  justify-content: center;
+  margin-top: 65px;
+  flex-wrap: wrap;
+}
+
+.feature-card {
+  background: rgba(27, 36, 60, 0.99);
+  border: 1px solid #2ef8a022;
+  border-radius: 15px;
+  box-shadow: 0 2px 16px #2ef8a022;
+  padding: 30px 24px 24px 24px;
+  min-width: 230px;
+  max-width: 320px;
+  text-align: center;
+  margin-bottom: 25px;
+  transition: transform 0.22s, box-shadow 0.22s;
+}
+.feature-card:hover {
+  transform: translateY(-8px) scale(1.033);
+  box-shadow: 0 6px 32px #2ef8a044;
+  border-color: #2ef8a066;
+}
+.feature-icon {
+  font-size: 2.4em;
+  margin-bottom: 10px;
+  display: block;
+}
+.feature-card h3 {
+  color: #2ef8a0;
+  margin: 0 0 7px 0;
+  font-size: 1.25em;
+  font-weight: 700;
+}
+.feature-card p {
+  color: #e4f6fb;
+  font-size: 1em;
+  margin: 0;
 }
 
 input, select, button, textarea {
   font-family: inherit;
   padding: 8px;
   margin: 7px 0;
-  border: 1px solid #ddd;
+  border: 1px solid #2ef8a055;
   border-radius: 6px;
   font-size: 1em;
+  background: #111c32;
+  color: #fff;
 }
 
-button {
-  background: #0077cc;
-  color: #fff;
-  border: none;
+button, .btn-main {
   cursor: pointer;
-  transition: background 0.2s;
-}
-button:hover {
-  background: #005fa3;
 }
 
 form {
@@ -76,7 +176,7 @@ form {
 img, video {
   margin: 10px;
   border-radius: 8px;
-  box-shadow: 0 1px 6px #0001;
+  box-shadow: 0 1px 6px #2ef8a022;
   max-width: 94%;
 }
 
@@ -87,10 +187,11 @@ ul {
 
 footer {
   text-align: center;
-  background: #eee;
-  color: #444;
-  padding: 10px 0;
-  margin-top: 20px;
-  font-size: 0.97em;
-  border-top: 1px solid #ccc;
+  background: #161c2d;
+  color: #7adbbe;
+  padding: 15px 0;
+  margin-top: 30px;
+  font-size: 1em;
+  border-top: 1px solid #2ef8a033;
+  letter-spacing: 1px;
 }
