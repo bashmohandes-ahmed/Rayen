@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>rayen | راين</title>
+</head>
+<body>
+  <h1>منصة راين</h1>
+  <nav>
+    <a href="#" onclick="showSection('home')">الرئيسية</a> |
+    <a href="#" onclick="showSection('auth', 'login')">تسجيل الدخول</a> |
+    <a href="#" onclick="showSection('auth', 'signup')">إنشاء حساب</a>
+  </nav>
+  <div id="home-section">
+    <p>مرحبًا بك في منصة راين للشراء والبيع.</p>
+  </div>
+  <div id="auth-section" style="display:none">
+    <div id="login-form-container">
+      <h2>تسجيل الدخول</h2>
+      <form id="login-form">
+        <label>البريد الإلكتروني</label>
+        <input id="login-email" name="email" type="email" required>
+        <label>كلمة المرور</label>
+        <input id="login-password" name="password" type="password" required>
+        <button type="submit">دخول</button>
+        <div id="login-msg"></div>
+      </form>
+      <div>
+        ليس لديك حساب؟ <a href="#" onclick="showSection('auth','signup')">إنشاء حساب جديد</a>
+      </div>
+    </div>
+    <div id="signup-form-container" style="display:none">
+      <h2>إنشاء حساب جديد</h2>
+      <form id="signup-form">
+        <label>اسم المستخدم</label>
+        <input id="signup-username" name="username" required>
+        <label>البريد الإلكتروني</label>
+        <input id="signup-email" name="email" type="email" required>
+        <label>كلمة المرور</label>
+        <input id="signup-password" name="password" type="password" required>
+        <label>نوع الحساب</label>
+        <select id="signup-role" name="role">
+          <option value="customer">مشتري</option>
+          <option value="seller">تاجر</option>
+        </select>
+        <button type="submit">إنشاء الحساب</button>
+        <div id="signup-msg"></div>
+      </form>
+      <div>
+        لديك حساب؟ <a href="#" onclick="showSection('auth','login')">تسجيل الدخول</a>
+      </div>
+    </div>
+    <div style="margin-top:20px;">
+      <a href="#" onclick="showSection('home')">العودة للرئيسية</a>
+    </div>
+  </div>
+  <script>
+    function showSection(section, form) {
+      document.getElementById('home-section').style.display = (section === 'home') ? 'block' : 'none';
+      document.getElementById('auth-section').style.display = (section === 'auth') ? 'block' : 'none';
+      document.getElementById('login-form-container').style.display = (form === 'login' || !form) ? 'block' : 'none';
+      document.getElementById('signup-form-container').style.display = (form === 'signup') ? 'block' : 'none';
+    }
+    showSection('home');
+
+    document.getElementById('signup-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const payload = {
+        username: this['signup-username'].value,
+        email: this['signup-email'].value,
+        password: this['signup-password'].value,
+        role: this['signup-role'].value
+      };
+      const res = await fetch('/api/signup', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      const data = await res.json();
+      document.getElementById('signup-msg').innerText = data.message || 'حدث خطأ!';
+      if(res.ok) this.reset();
+    };
+    document.getElementById('login-form').onsubmit = async function(e) {
+      e.preventDefault();
+      const payload = {
+        email: this['login-email'].value,
+        password: this['login-password'].value
+      };
+      const res = await fetch('/api/login', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+      const data = await res.json();
+      document.getElementById('login-msg').innerText = data.message || 'حدث خطأ!';
+      if(res.ok) setTimeout(()=>showSection('home'), 1000);
+    };
+  </script>
+</body>
+</html>
